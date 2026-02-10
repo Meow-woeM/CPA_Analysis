@@ -1,0 +1,15 @@
+model,n,r_squared,term,coef,std_err,z_approx,p_approx
+OLS necessity index (unadjusted),145,0.132,Intercept,3.67544,0.08911,41.24727,0.0
+OLS necessity index (unadjusted),145,0.132,Aware alternative pathway,-0.53339,0.11438,-4.66327,0.0
+OLS necessity index (adjusted),144,0.13929,Intercept,3.67476,0.27956,13.14495,0.0
+OLS necessity index (adjusted),144,0.13929,Aware alternative pathway,-0.55287,0.12042,-4.59113,0.0
+OLS necessity index (adjusted),144,0.13929,CPA intent (1-5),0.02046,0.04653,0.43967,0.66017
+OLS necessity index (adjusted),144,0.13929,Work >20h in accounting,-0.05382,0.11607,-0.46365,0.6429
+OLS necessity index (adjusted),144,0.13929,Age,-0.00137,0.00835,-0.16469,0.86919
+LPM necessity binary (unadjusted),145,0.10091,Intercept,0.82456,0.0609,13.53876,0.0
+LPM necessity binary (unadjusted),145,0.10091,Aware alternative pathway,-0.3132,0.07818,-4.00619,6e-05
+LPM necessity binary (adjusted),144,0.11849,Intercept,0.86814,0.189,4.5932,0.0
+LPM necessity binary (adjusted),144,0.11849,Aware alternative pathway,-0.34025,0.08142,-4.17921,3e-05
+LPM necessity binary (adjusted),144,0.11849,CPA intent (1-5),0.02399,0.03146,0.76263,0.44569
+LPM necessity binary (adjusted),144,0.11849,Work >20h in accounting,-0.03975,0.07848,-0.50654,0.61248
+LPM necessity binary (adjusted),144,0.11849,Age,-0.00362,0.00564,-0.64216,0.52077

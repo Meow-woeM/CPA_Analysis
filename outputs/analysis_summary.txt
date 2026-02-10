@@ -1,0 +1,21 @@
+Cross-sectional associational analysis
+===================================
+
+Undergraduate sample size after key-variable cleaning: n=145
+Undergraduate sample size with controls: n=144
+
+Perceived MAcc necessity index (1-5; higher = more necessary)
+- Mean (aware): 3.142
+- Mean (not aware): 3.675
+- Welch t-test p (approx): 0.0000
+- Mann-Whitney p (approx): 0.0000
+
+Adjusted OLS association (index outcome):
+- Aware coefficient: -0.553 (p≈0.0000)
+  Interpretation: awareness is associated with higher/lower index depending on sign;
+  this is not a causal estimate due to cross-sectional observational design.
+
+Binary robustness outcome (1=leans necessary, 0=neutral/optional)
+- Share necessary (aware): 0.511
+- Share necessary (not aware): 0.825
+- Two-proportion z-test p (approx): 0.0001
