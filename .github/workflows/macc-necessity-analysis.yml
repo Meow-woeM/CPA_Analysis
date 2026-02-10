@@ -1,0 +1,82 @@
+name: MAcc Necessity Analysis
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "analysis_macc_optional.py"
+      - "Alternative CPA Pathways Survey_December 31, 2025_09.45.csv"
+      - ".github/workflows/macc-necessity-analysis.yml"
+  pull_request:
+    paths:
+      - "analysis_macc_optional.py"
+      - "Alternative CPA Pathways Survey_December 31, 2025_09.45.csv"
+      - ".github/workflows/macc-necessity-analysis.yml"
+
+jobs:
+  run-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run undergraduate MAcc necessity analysis
+        run: |
+          python analysis_macc_optional.py
+
+      - name: Publish key findings in workflow summary
+        run: |
+          python - <<'PY'
+          import csv
+
+          with open('outputs/descriptive_statistics.csv', newline='') as f:
+              rows = list(csv.DictReader(f))
+
+          aware = next(r for r in rows if r['group'] == 'Aware of alternative pathway')
+          unaware = next(r for r in rows if r['group'] == 'Not aware of alternative pathway')
+
+          with open('outputs/group_comparison_tests.csv', newline='') as f:
+              tests = list(csv.DictReader(f))
+          welch = next(r for r in tests if r['test'].startswith('Welch t-test'))
+
+          with open('outputs/regression_results.csv', newline='') as f:
+              reg = list(csv.DictReader(f))
+          aware_adj = next(
+              r for r in reg
+              if r['model'] == 'OLS necessity index (adjusted)' and r['term'] == 'Aware alternative pathway'
+          )
+
+          summary = f"""
+          ## Cross-sectional undergraduate results (associational)
+
+          - Mean necessity index (aware): **{aware['mean_necessity_index']}**
+          - Mean necessity index (not aware): **{unaware['mean_necessity_index']}**
+          - Welch test p-value (approx): **{welch['p_value_approx']}**
+          - Adjusted OLS coefficient for awareness: **{aware_adj['coef']}** (p≈**{aware_adj['p_approx']}**)
+
+          > Interpretation note: these are **associations** from observational cross-sectional survey data and should not be interpreted causally.
+          """
+
+          with open("$GITHUB_STEP_SUMMARY", "a", encoding="utf-8") as out:
+              out.write(summary)
+          PY
+
+      - name: Upload analysis outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: macc-necessity-analysis-outputs
+          path: |
+            outputs/descriptive_statistics.csv
+            outputs/descriptive_statistics_binary.csv
+            outputs/group_comparison_tests.csv
+            outputs/regression_results.csv
+            outputs/necessity_index_distribution.csv
+            outputs/analysis_summary.txt
+            outputs/awareness_vs_necessity.svg
+          if-no-files-found: error
