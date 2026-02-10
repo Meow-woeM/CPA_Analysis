@@ -1,0 +1,4 @@
+test,statistic_1,statistic_2,p_value_approx
+"Welch t-test (index, aware-unaware)",-5.11531,,0.0
+Mann-Whitney U (index),1492.5,-4.1107,4e-05
+Two-proportion z-test (binary necessary),-3.82516,,0.00013
